@@ -17,7 +17,7 @@ title: Caroline Li
 email: caroline.li.atx@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Caroline Li's blog featuring projects, hobbies, and life as a UT Austin student majoring in Computer Science and Electrical Engineering!
-baseurl: "/blog" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://Caroline-Li.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: idk
 github_username:  Caroline-Li
