@@ -8,7 +8,7 @@ categories: jekyll update
 Ah, *Iron Gold*, the continuation of the *Red Rising" series by Pierce Brown. Where to start?
 
 *Iron Gold* simply has a different, colder feeling than its predecessors. Instead of the fast-paced
-enery of the previous three books, *Iron Gold* weaves in dark, sinister, morally ambiguous themes of
+energy of the previous three books, *Iron Gold* weaves in dark, sinister, morally ambiguous themes of
 war, freedom, and ideology. It leisurely reveals the consequences of civil war in the ten year lapse
 between *Morning Star* and *Iron Gold*. Civil war, it seems, has taken a terrible toll upon the original
 trilogy's characters. On the other hand, it has only emboldened our new characters with seething
