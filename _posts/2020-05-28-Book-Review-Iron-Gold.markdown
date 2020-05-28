@@ -23,8 +23,12 @@ storylines enough to pull through the ending.
 
 However, I really liked the themes and moral questions *Iron Gold* attempts to address. Is violence
 ever the answer? How much war can people endure, before the sacrafices outweigh the conquest? More
-improtantly, what is the worth of a life? Are people's lives worth the final ambition in conquest?
-Are the sacrafices worth the eventual peace? And as we ponder these questions, our heroes become
+importantly, what is the worth of a life? Are people's lives worth the final ambition in conquest?
+Are the sacrafices worth the eventual peace? 
+
+Our characters dream of peace, yet they are unable to find it. For as they fight for freedom,
+their people fight for rights, and their enemies fight for order in the midst of chaos. Can freedom
+excuse civil war? And as we ponder these questions, our heroes become
 twisted, both noble and cruel, mirroring their enemies. Who, in *Iron Gold*, deserves to win?
 
 With that, I leave the answer in your hands. Read *Iron Gold* to find out!
