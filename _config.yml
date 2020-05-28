@@ -24,7 +24,7 @@ github_username:  Caroline-Li
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-cayman
+theme: jekyll-theme-minimal
 plugins:
   - jekyll-feed
 sass:
