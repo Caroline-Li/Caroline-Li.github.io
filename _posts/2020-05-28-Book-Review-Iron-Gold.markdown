@@ -5,7 +5,7 @@ date:   2020-05-27 09:54:48 -0500
 categories: jekyll update
 ---
 
-Ah, *Iron Gold*, the continuation of the *Red Rising" series by Pierce Brown. Where to start?
+Ah, *Iron Gold*, the continuation of the *Red Rising* series by Pierce Brown. Where to start?
 
 *Iron Gold* simply has a different, colder feeling than its predecessors. Instead of the fast-paced
 energy of the previous three books, *Iron Gold* weaves in dark, sinister, morally ambiguous themes of
