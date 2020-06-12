@@ -1,5 +1,6 @@
 ---
-layout: page
+layout: specific_page_posts
+post_type: Projects
 title: Projects
 permalink: /projects/
 ---
