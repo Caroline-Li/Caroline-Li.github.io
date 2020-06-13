@@ -40,7 +40,7 @@ connected to AWS IoT. After a successful connection, it would send values from a
 AWS IoT. From my AWS IoT console, I could see the messages being published! YAY!
 
 Hold on, what does it mean when a message is published? AWS IoT has topics where these messages are sent
-and recieved. Essentially, the MQTT sends and recieves messages over "topics", which are specific endpoints
+and recieved. Essentially, the MQTT client sends and recieves messages over "topics", which are specific endpoints
 that will recieve and send messages. This allows different devices to publish messages to different endpoints,
 so their messages won't be jumbled in the same message feed.
 
