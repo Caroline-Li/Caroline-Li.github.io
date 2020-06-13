@@ -44,7 +44,8 @@ and recieved. Essentially, the MQTT sends and recieves messages over "topics", w
 that will recieve and send messages. This allows different devices to publish messages to different endpoints,
 so their messages won't be jumbled in the same message feed.
 
-Pictures will be added later.
+That's all!
+
 
 
 
