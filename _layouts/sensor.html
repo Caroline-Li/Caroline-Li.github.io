@@ -1,0 +1,18 @@
+---
+layout: sensorDefault
+---
+<article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+  </header>
+
+  <div class="post-content">
+    <input type = "text" id = "textField" name = "value" value = "Latest Sensor Value: " readonly>
+    <button type="button" onclick = "sensorRequest();">Get Sensor Data!</button>
+    {{ content }}
+  </div>
+
+</article>
+
+
