@@ -11,12 +11,20 @@ request.onload = function () {
 
     if (request.status >= 200 && request.status < 400)
     {
-        data.Items.forEach((sensor) => {
-        var sensorData = sensor.Sensor
-        console.log(sensorData)
-        })
+        if (data.Items.length > 0)
+        {
+            data.Items.forEach((sensor) => {
+            var sensorData = sensor.Sensor
+            console.log(sensorData)
+            })
         var latest = data.Items[0].Sensor
         document.getElementById('textField').value = latest.toString() + "°F"
+        }
+        else
+        {
+            document.getElementById('textField').value = "DB is empty!!"
+        }
+            
     }
     else
     {
