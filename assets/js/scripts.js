@@ -17,18 +17,13 @@ request.onload = function () {
             var sensorData = sensor.Sensor
             console.log(sensorData)
             })
-        var latest = data.Items[0].Sensor
-        document.getElementById('textField').value = latest.toString() + "°F"
+            var latest = data.Items[0].Sensor
+            document.getElementById('textField').value = latest.toString() + "°F"
         }
-        else
-        {
-            document.getElementById('textField').value = "DB is empty!!"
-        }
-            
     }
     else
     {
-        console.log('error')
+        document.getElementById('textField').value = "DB is empty!!"
     }
 }
 
