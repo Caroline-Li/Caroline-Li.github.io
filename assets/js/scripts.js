@@ -20,10 +20,14 @@ request.onload = function () {
             var latest = data.Items[0].Sensor
             document.getElementById('textField').value = latest.toString() + "°F"
         }
+        else
+        {
+            document.getElementById('textField').value = "DB is empty!!"
+        }
     }
     else
     {
-        document.getElementById('textField').value = "DB is empty!!"
+        console.log('error')
     }
 }
 
