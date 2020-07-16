@@ -15,23 +15,8 @@ layout: sensorDefault
         <option value = "All Reading Average">All Reading Average</option>
     </select>
     <br>
-    <button type = "button" onclick = "makeChart();">Plot Sensor Data!</button>
+    <button type = "button" onclick = "getSensorChartData();">Plot Sensor Data!</button>
     <canvas id="lineChart" width = "1600" height = "900"></canvas>
-    <script>
-        var chartDataSet = getSensorChartData();
-        var ctx = document.getElementById("lineChart");
-        var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: chartDataSet[0],
-            datasets: [
-              { 
-                data: chartDataSet[1]
-              }
-            ]
-          }
-        });
-    </script>
     {{ content }}
   </div>
 
