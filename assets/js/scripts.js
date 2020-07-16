@@ -98,7 +98,7 @@ function getSensorChartData()
 {
     var request = new XMLHttpRequest()
 
-    request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB', true)
+    request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB', false)
     request.onload = function () {
     // Begin accessing JSON data
         var data = JSON.parse(this.response)
@@ -114,8 +114,22 @@ function getSensorChartData()
         combinedData.push(chartTime);
         combinedData.push(chartData);
         console.log(combinedData);
-        return combinedData;
+        let dummyData = [[15, 16, 17], [3, 4 ,5]]
+        console.log(dummyData);
+        var ctx = document.getElementById("lineChart");
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: combinedData[0],
+            datasets: [
+              { 
+                data: combinedData[1]
+              }
+            ]
+          }
+        });
     }
+    request.send()
 }
 
 
