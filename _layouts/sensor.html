@@ -15,10 +15,16 @@ layout: sensorDefault
         <option value = "All Reading Average">All Reading Average</option>
     </select>
     <br>
-    <button type = "button" onclick = "getSensorChartData();">Plot Sensor Data!</button>
     <canvas id="lineChart" width = "1600" height = "900"></canvas>
+    <button type = "button" onclick = "getSensorChartData();">Plot Sensor Data!</button>
+    <select name = "sensor_plot_actions" id = "sensor_plot_actions">
+        <option value = "All">All</option>
+        <option value = "Last 10 Readings">Last 10 Readings</option>
+        <option value = "Last Hour">Last Hour</option>
+    </select>
     <script>
-        getSensorChartData();
+        if (plot)
+            getSensorChartData();
     </script>
     {{ content }}
   </div>
