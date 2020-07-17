@@ -1,4 +1,5 @@
 var plot = true;
+var myChart;
 function sensorRequest() {
 // Create request variable and assign new XMLHttpRequest object
 console.log("hello")
@@ -109,10 +110,9 @@ function compareForward(a, b)
 
 function getSensorChartData()
 {
-    plot = false;
     var request = new XMLHttpRequest()
 
-    request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB', false)
+    request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB', true)
     request.onload = function () {
     // Begin accessing JSON data
         var data = JSON.parse(this.response)
@@ -171,8 +171,16 @@ function getSensorChartData()
         console.log(combinedData);
         let dummyData = [[15, 16, 17], [3, 4 ,5]]
         console.log(dummyData);
+        if (myChart)
+        {
+            myChart.data.labels = combinedData[0];
+            myChart.data.datasets[0].data = combinedData[1];
+            myChart.update();
+        }
+        else
+        {
         var ctx = document.getElementById("lineChart");
-        var myChart = new Chart(ctx, {
+        myChart = new Chart(ctx, {
           type: 'line',
           data: {
             labels: combinedData[0],
@@ -213,7 +221,9 @@ function getSensorChartData()
         }
         });
     }
+    }
     request.send()
+    plot = false;
 }
 
 
