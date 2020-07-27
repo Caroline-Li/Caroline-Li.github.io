@@ -1,87 +1,86 @@
 var plot = true;
 var myChart;
-function sensorRequest() {
+function sensorRequestData() {
 // Create request variable and assign new XMLHttpRequest object
-console.log("hello")
-var request = new XMLHttpRequest()
-
-request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB', true)
-
-request.onload = function () {
-// Begin accessing JSON data
-    var data = JSON.parse(this.response)
     var select = document.getElementById('sensor_actions').value
-
-    if (request.status >= 200 && request.status < 400)
+    var limit;
+    var request = new XMLHttpRequest();
+    switch(select)
     {
-        if (data.Items.length > 0)
+        case 'Latest':
+        { 
+            limit = 1;
+            break;
+        }
+        case '10 Reading Average':
         {
-            data.Items.sort(compare)
-            data.Items.forEach((sensor) => {
-            var sensorData = sensor.Sensor
-            console.log(sensorData)
-            })
-            var display_value;
-            switch(select)
-            { 
-                case 'Latest':
-                {
-                    display_value = data.Items[0].Sensor
-                    break;
-                }
-                case '10 Reading Average':
-                {   var limit = 10
-                    var total = 0.0
-                    var average = 0.0
-                    if (data.Items.length < 10)
-                    {
-                        limit = data.Items.length;
-                    }
-                    var i;
-                    for (i = 0; i < limit; i++)
-                    {
-                        total += data.Items[i].Sensor;
-                    }
-                    average = total / limit
-                    display_value = average;
-                    console.log('average: ' + average)
-                    break;
-                }
-                case 'All Reading Average':
-                {
-                    var total = 0.0
-                    var average = 0.0
-                    var i;
-                    for ( i = 0; i < data.Items.length; i++)
-                    {
-                        total += data.Items[i].Sensor
-                    }
-                    average = total / data.Items.length
-                    console.log('average: ' + average)
-                    display_value = average;
-                    break;
-                }
-                default:
-                {
-                    console.log("Default!")
-                    display_value = "Default!"
-                }
+            limit = 10;
+            break;
+        }
+        case 'All Reading Average':
+        {
+            limit = 2000;
+            break;
+        }
+    }
+    request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB?limit='+limit.toString(), true);
+    request.onload = function () {
+        var data = JSON.parse(this.response)
+        
+        if (request.status == 200 && data.Items.length > 0) {
+        switch(select)
+        {
+            case 'Latest': {
+                display_value = data.Items[0].Payload.sensor_a0;
+                break;
             }
-            document.getElementById('textField').value = display_value.toString() + "°F"
+            case '10 Reading Average': {   
+                var end = 10
+                var total = 0.0
+                var average = 0.0
+                if (data.Items.length < 10)
+                {
+                    end = data.Items.length;
+                }
+                var i;
+                for (i = 0; i < end; i++)
+                {
+                    total += data.Items[i].Payload.sensor_a0;
+                }
+                average = total / limit
+                display_value = average;
+                console.log('average: ' + average)
+                break;
+            }
+            case 'All Reading Average': {
+                data.Items.sort(compare);
+                var total = 0.0
+                var average = 0.0
+                var i;
+                for ( i = 0; i < data.Items.length; i++) {
+                    total += data.Items[i].Payload.sensor_a0;
+                }
+                average = total / data.Items.length
+                console.log('average: ' + average)
+                display_value = average;
+                break;
+            }
+            default: {
+                console.log("Default!")
+                display_value = "Default!"
+            }
         }
-        else
-        {
-            document.getElementById('textField').value = "DB is empty!!"
-        }
+        document.getElementById('textField').value = display_value.toString() + '°F';
     }
-    else
-    {
-        console.log('error')
+    else {
+        document.getElementById('textField').value = "DB is Empty!!";
     }
+    
+    }
+    request.send();
 }
+        
 
-request.send()
-}
 
 function compare(a, b)
 {
@@ -110,19 +109,42 @@ function compareForward(a, b)
 
 function getSensorChartData()
 {
+    var select = document.getElementById('sensor_plot_actions').value
+    var limit = 0;
     var request = new XMLHttpRequest()
+    switch(select)
+    {
+        case 'Last Hour':
+        { 
+            limit = 120;
+            break;
+        }
+        case 'Last 10 Readings':
+        {
+            limit = 10;
+            break;
+        }
+        case 'All':
+        {
+            limit = 2000;
+            break;
+        }
+    }
+    console.log(limit);
+    request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB?limit='+limit.toString(), true);
 
-    request.open('GET', 'https://kv0obds3p6.execute-api.us-east-2.amazonaws.com/read_dynamoDB', true)
     request.onload = function () {
     // Begin accessing JSON data
-        var data = JSON.parse(this.response)
-        data.Items.sort(compareForward)
+        var data = JSON.parse(this.response);
+        //data.Items.sort(compareForward);
         var select = document.getElementById("sensor_plot_actions").value
         var chartTime = [];
         var chartData = [];
         var combinedData = [];
-        var limit = data.Items.length;
+        let limit = data.Items.length;
+        console.log(limit);
         var start = 0;
+        //data.Items.sort(compareForward);
         switch(select)
         {
             case 'All':
@@ -142,11 +164,11 @@ function getSensorChartData()
             {
                 var count = 0;
                 var lastItem = data.Items.length - 1;
-                var lastHour = parseInt(data.Items[lastItem].Payload.current_time);
+                var lastHour = parseInt(data.Items[lastItem].Payload.current_time/(3600));
                 var i;
                 for (i = lastItem; i >= 0; i--)
                 {
-                    if (data.Items[i].Payload.current_time >= lastHour)
+                    if (data.Items[i].Payload.current_time/3600 >= lastHour)
                         count++;
                     else
                         break;
@@ -163,8 +185,8 @@ function getSensorChartData()
         var i;
         for (i = start; i < limit; i++)
         {
-            chartTime.push(data.Items[i].Payload.current_time);
-            chartData.push(data.Items[i].Sensor);
+            chartTime.push(data.Items[i].Payload.current_time*1000);
+            chartData.push(data.Items[i].Payload.sensor_a0);
         }
         combinedData.push(chartTime);
         combinedData.push(chartData);
@@ -201,9 +223,21 @@ function getSensorChartData()
             },
             scales: {
                 xAxes: [{
+                    type: 'time',
+                    autoSkip: false,
                     scaleLabel: {
                     display: true,
                     labelString: 'Time (hours in 24-hour clock)'
+                },
+                ticks: {
+                    maxTicksLimit: 48
+                },
+                time: {
+                    unit: 'minute',
+                    unitStepSize: 5,
+                    parser: function(utcMoment) {
+                        return moment(utcMoment).utcOffset(+0);
+                    }
                 }
             }],
                 yAxes: [{
