@@ -1,4 +1,5 @@
 var plot = true;
+//var 24_HOUR_CONSTANT_SECONDS = 86400;
 var myChart;
 function sensorRequestData() {
 // Create request variable and assign new XMLHttpRequest object
@@ -47,7 +48,7 @@ function sensorRequestData() {
                 {
                     total += data.Items[i].Payload.sensor_a0;
                 }
-                average = total / limit
+                average = total / end;
                 display_value = average;
                 console.log('average: ' + average)
                 break;
@@ -144,16 +145,19 @@ function getSensorChartData()
         let limit = data.Items.length;
         console.log(limit);
         var start = 0;
+        var minStep = 5;
         //data.Items.sort(compareForward);
         switch(select)
         {
             case 'All':
             {
                 limit = data.Items.length;
+                minStep = -1;
                 break;
             }
             case 'Last 10 Readings':
             {
+                minStep = 1;
                 if (data.Items.length >= 10)
                     start = data.Items.length - 10;
                 else
@@ -162,13 +166,14 @@ function getSensorChartData()
             }
             case 'Last Hour':
             {
+                minStep = 5;
                 var count = 0;
                 var lastItem = data.Items.length - 1;
-                var lastHour = parseInt(data.Items[lastItem].Payload.current_time/(3600));
+                var lastHour = parseInt((data.Items[lastItem].Time-86400 - 3600));
                 var i;
                 for (i = lastItem; i >= 0; i--)
                 {
-                    if (data.Items[i].Payload.current_time/3600 >= lastHour)
+                    if ((data.Items[i].Time-86400) >= lastHour)
                         count++;
                     else
                         break;
@@ -182,21 +187,36 @@ function getSensorChartData()
                 limit = data.Items.length;
             }
         }
+        let timeInterval = (data.Items[0].Time - data.Items[data.Items.length-1].Time);
+        timeInterval = timeInterval/3600;
+        console.log('timeinterval');
+        console.log(timeInterval);
+        timeInterval = Math.round(timeInterval/4);
+        let increment = (minStep == -1) ? (1+timeInterval) : 1;
+        if (minStep == -1)
+            minStep = 5*(1+timeInterval);
+        console.log('minstep');
+        console.log(minStep);
+        console.log('increment');
+        console.log(increment);
+
         var i;
-        for (i = start; i < limit; i++)
+        for (i = start; i < limit; i+=increment)
         {
-            chartTime.push(data.Items[i].Payload.current_time*1000);
+            chartTime.push((data.Items[i].Time-86400)*1000);
             chartData.push(data.Items[i].Payload.sensor_a0);
         }
         combinedData.push(chartTime);
         combinedData.push(chartData);
         console.log(combinedData);
+            
         let dummyData = [[15, 16, 17], [3, 4 ,5]]
         console.log(dummyData);
         if (myChart)
         {
             myChart.data.labels = combinedData[0];
             myChart.data.datasets[0].data = combinedData[1];
+            myChart.options.scales.xAxes[0].time.unitStepSize = minStep;
             myChart.update();
         }
         else
@@ -227,16 +247,16 @@ function getSensorChartData()
                     autoSkip: false,
                     scaleLabel: {
                     display: true,
-                    labelString: 'Time (hours in 24-hour clock)'
+                    labelString: 'Time (Current Day)'
                 },
                 ticks: {
                     maxTicksLimit: 48
                 },
                 time: {
                     unit: 'minute',
-                    unitStepSize: 5,
+                    unitStepSize: minStep,
                     parser: function(utcMoment) {
-                        return moment(utcMoment).utcOffset(+0);
+                        return moment(utcMoment).utcOffset(-5);
                     }
                 }
             }],
