@@ -20,7 +20,7 @@ function sensorRequestData() {
         }
         case 'All Reading Average':
         {
-            limit = 2000;
+            limit = 2880;
             break;
         }
     }
@@ -127,7 +127,7 @@ function getSensorChartData()
         }
         case 'All':
         {
-            limit = 2000;
+            limit = 2880;
             break;
         }
     }
@@ -168,17 +168,17 @@ function getSensorChartData()
             {
                 minStep = 5;
                 var count = 0;
-                var lastItem = data.Items.length - 1;
-                var lastHour = parseInt((data.Items[lastItem].Time-86400 - 3600));
+                let lastItem = data.Items.length - 1;
+                var lastHour = parseInt((data.Items[0].Time-86400 - 3600));
                 var i;
-                for (i = lastItem; i >= 0; i--)
+                for (i = 0; i <= lastItem; i++)
                 {
                     if ((data.Items[i].Time-86400) >= lastHour)
                         count++;
                     else
                         break;
                 }
-                start = i + 1;
+                start = 0;
                 limit = count;
                 break;
             }
@@ -199,6 +199,7 @@ function getSensorChartData()
         console.log(minStep);
         console.log('increment');
         console.log(increment);
+        var xAxesLabel = 'Date and Time: ';
 
         var i;
         for (i = start; i < limit; i+=increment)
@@ -247,7 +248,7 @@ function getSensorChartData()
                     autoSkip: false,
                     scaleLabel: {
                     display: true,
-                    labelString: 'Time (Current Day)'
+                    labelString: xAxesLabel.concat(Date())
                 },
                 ticks: {
                     maxTicksLimit: 48
