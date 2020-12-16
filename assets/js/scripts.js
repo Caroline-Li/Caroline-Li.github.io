@@ -267,7 +267,7 @@ function getSensorChartData()
                         labelString: 'Temperature (°F)'
                     },
                     ticks: {
-                        min: 70,
+                        min: 64,
                         max: 84
                     }
                 }]
